@@ -11,7 +11,6 @@ const handler: PlasmoMessaging.MessageHandler<{}, Response> = async (_, res) => 
 
   const response = await fetch(process.env.PLASMO_PUBLIC_IMAGES_JSON, { cache: "force-cache" })
   const images: string[] = JSON.parse(await response.text())
-  console.log(images)
 
   res.send({
     images
