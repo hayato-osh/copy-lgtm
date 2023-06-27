@@ -6,6 +6,8 @@
   margin-left: 8px;
   font-size: 12px;
   font-weight: var(--base-text-weight-medium, 500);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   line-height: 20px;
   color: var(--color-btn-text);
   background-color: var(--color-btn-bg);
@@ -16,13 +18,22 @@
   cursor: pointer;
 }
 
+.btn:disabled {
+  fill: var(--color-primer-fg-disabled);
+  background-color: var(--color-btn-bg);
+  border-color: var(--color-btn-border);
+  color: var(--color-primer-fg-disabled);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
 .btn:active {
   background-color: var(--color-btn-active-bg);
   border-color: var(--color-btn-active-border);
   transition: none;
 }
 
-.btn:hover {
+.btn:hover:not(:disabled) {
   background-color: var(--color-btn-hover-bg);
   border-color: var(--color-btn-hover-border);
   transition-duration: 0.1s;
