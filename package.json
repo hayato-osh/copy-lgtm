@@ -1,6 +1,6 @@
 {
   "name": "lgtm",
-  "displayName": "Lgtm",
+  "displayName": "LGTM",
   "version": "0.0.1",
   "description": "This application provides LGTM images using copyright-free images",
   "author": "hayato",
@@ -12,6 +12,7 @@
     "upload": "./scripts/createLGTM.mts"
   },
   "dependencies": {
+    "@plasmohq/messaging": "^0.4.0",
     "axios": "^1.4.0",
     "plasmo": "0.76.3",
     "react": "18.2.0",
