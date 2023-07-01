@@ -6,7 +6,6 @@
 <h2>What is this app?</h2>
 <p>This application is the easiest way to copy LGTM images on GitHub.</p>
 
-
 <h2>How to use</h2>
 <ol>
   <li>Install this extension in your browser.</li>
