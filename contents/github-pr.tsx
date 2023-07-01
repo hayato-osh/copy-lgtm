@@ -7,7 +7,7 @@ import { copyToClipboard } from "~utils/copyToClipboard"
 import { useState } from "react"
 
 export const config: PlasmoCSConfig = {
-  matches: ["https://github.com/**/**/pull/*"],
+  matches: ["https://github.com/*"],
 }
 
 export const getStyle = () => {
@@ -17,7 +17,7 @@ export const getStyle = () => {
 }
 
 export const getInlineAnchor: PlasmoGetInlineAnchor = () =>
-  document.querySelector(".pr-review-tools")
+  document.querySelector(".pr-toolbar > .diffbar > .pr-review-tools")
 
 const PlasmoInline = () => {
   const [isCopied, setIsCopied] = useState(false);
