@@ -33,7 +33,7 @@
   },
   "manifest": {
     "host_permissions": [
-      "https://*/*"
+      "https://github.com/*"
     ]
   }
 }
