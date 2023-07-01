@@ -9,7 +9,9 @@
     "dev": "plasmo dev",
     "build": "plasmo build",
     "package": "plasmo package",
-    "upload": "./scripts/createLGTM.mts"
+    "upload": "./scripts/createLGTM.mts",
+    "lint:prettier": "prettier --check .",
+    "fix:prettier": "prettier --write ."
   },
   "dependencies": {
     "@plasmohq/messaging": "^0.4.0",
