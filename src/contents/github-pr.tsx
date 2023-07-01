@@ -1,3 +1,4 @@
+import styleText from "data-text:./github-pr.module.pcss"
 import type { PlasmoCSConfig, PlasmoGetInlineAnchor } from "plasmo"
 
 import * as style from "./github-pr.module.pcss"
@@ -7,6 +8,12 @@ import { useState } from "react"
 
 export const config: PlasmoCSConfig = {
   matches: ["https://github.com/*"],
+}
+
+export const getStyle = () => {
+  const style = document.createElement("style")
+  style.textContent = styleText
+  return style
 }
 
 export const getInlineAnchor: PlasmoGetInlineAnchor = () =>
