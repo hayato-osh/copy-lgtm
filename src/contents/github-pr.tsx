@@ -1,19 +1,12 @@
-import cssText from "data-text:~/contents/github-pr.module.pcss"
 import type { PlasmoCSConfig, PlasmoGetInlineAnchor } from "plasmo"
 
 import * as style from "./github-pr.module.pcss"
 import { sendToBackground } from "@plasmohq/messaging"
-import { copyToClipboard } from "~utils/copyToClipboard"
+import { copyToClipboard } from "@/utils/copyToClipboard"
 import { useState } from "react"
 
 export const config: PlasmoCSConfig = {
   matches: ["https://github.com/*"],
-}
-
-export const getStyle = () => {
-  const style = document.createElement("style")
-  style.textContent = cssText
-  return style
 }
 
 export const getInlineAnchor: PlasmoGetInlineAnchor = () =>

@@ -5,7 +5,7 @@
   "module": "esnext",
   "compilerOptions": {
     "paths": {
-      "~*": ["./*"]
+      "@/*": ["./src/*"]
     },
     "baseUrl": "."
   }
