@@ -1,8 +1,8 @@
 {
   "name": "lgtm",
   "displayName": "LGTM",
-  "version": "0.0.1",
-  "description": "This application provides LGTM images using copyright-free images",
+  "version": "0.1.0",
+  "description": "Extension that allows you to place a button on the GitHub pull request screen that allows you to copy LGTM images.",
   "author": "hayato",
   "type": "module",
   "scripts": {
