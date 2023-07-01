@@ -1,33 +1,19 @@
-This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
+<div style="text-align:center">
+  <img src="./assets/icon.png" alt="LGTM Extension's icon" width="80px" />
+  <h1 style="margin-top:12px;">LGTM Extension</h1>
+</div>
 
-## Getting Started
+<h2>What is this app?</h2>
+<p>This application is the easiest way to copy LGTM images on GitHub.</p>
 
-First, run the development server:
 
-```bash
-pnpm dev
-# or
-npm run dev
-```
-
-Open your browser and load the appropriate development build. For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
-
-You can start editing the popup by modifying `popup.tsx`. It should auto-update as you make changes. To add an options page, simply add a `options.tsx` file to the root of the project, with a react component default exported. Likewise to add a content page, add a `content.ts` file to the root of the project, importing some module and do some logic, then reload the extension on your browser.
-
-For further guidance, [visit our Documentation](https://docs.plasmo.com/)
-
-## Making production build
-
-Run the following:
-
-```bash
-pnpm build
-# or
-npm run build
-```
-
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
-
-## Submit to the webstores
-
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/framework/workflows/submit) and you should be on your way for automated submission!
+<h2>How to use</h2>
+<ol>
+  <li>Install this extension in your browser.</li>
+  <li>Please review it in a pull request in any repository on GitHub.</li>
+  <li>
+    <p>Click this button.</p>
+    <img src="./assets/github-lgtm.png" alt="GitHub Pull Request screen. The Copy LGTM button is located to the right of the Review Changes button and is highlighted with a red border." />
+  </li>
+  <li>Now that the LGTM image has been copied, please Approve and paste the image.</li>
+</ol>
