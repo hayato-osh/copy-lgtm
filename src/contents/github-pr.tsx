@@ -27,7 +27,6 @@ const PlasmoInline = () => {
   const [isCopied, setIsCopied] = useState(false);
 
   const onClickCopyLGTM = async () => {
-    console.log("clicked");
     const res = await sendToBackground<any, { images: string[] }>({
       name: "getImages",
     });
