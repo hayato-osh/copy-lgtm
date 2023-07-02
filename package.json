@@ -10,14 +10,17 @@
     "build": "plasmo build",
     "package": "plasmo package",
     "upload": "./scripts/createLGTM.mts",
+    "lint": "run-s -c lint:*",
     "lint:prettier": "prettier --check .",
     "lint:eslint": "eslint --cache .",
+    "fix": "run-s fix:*",
     "fix:prettier": "prettier --write .",
     "fix:eslint": "eslint --cache . --fix"
   },
   "dependencies": {
     "@plasmohq/messaging": "^0.4.0",
     "axios": "^1.4.0",
+    "npm-run-all": "^4.1.5",
     "plasmo": "0.76.3",
     "react": "18.2.0",
     "react-dom": "18.2.0"
