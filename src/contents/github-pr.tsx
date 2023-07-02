@@ -1,6 +1,7 @@
 import * as style from "./github-pr.module.pcss";
 import { copyToClipboard } from "@/utils/copyToClipboard";
 import { sendToBackground } from "@plasmohq/messaging";
+// eslint-disable-next-line import/no-unresolved
 import styleText from "data-text:./github-pr.module.pcss";
 import type { PlasmoCSConfig, PlasmoGetInlineAnchor } from "plasmo";
 import { useState } from "react";
@@ -22,7 +23,8 @@ const PlasmoInline = () => {
   const [isCopied, setIsCopied] = useState(false);
 
   const onClickCopyLGTM = async () => {
-    const res = await sendToBackground<{}, { images: string[] }>({
+    console.log("clicked");
+    const res = await sendToBackground<any, { images: string[] }>({
       name: "getImages",
     });
     // imagesの中から、ランダムに1つ選択
@@ -31,6 +33,9 @@ const PlasmoInline = () => {
     await copyToClipboard(clipboardText)
       .then(() => {
         setIsCopied(true);
+      })
+      .catch((err) => {
+        console.error(err);
       })
       .finally(() => {
         setTimeout(() => {
