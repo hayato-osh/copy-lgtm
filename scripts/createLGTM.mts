@@ -1,8 +1,11 @@
 #!/usr/bin/env -S node --loader ts-node/esm
+import fs from "fs/promises";
+
+import { createRequire } from "module";
+
 import axios from "axios";
 import admin from "firebase-admin";
-import fs from "fs/promises";
-import { createRequire } from "module";
+
 import sharp from "sharp";
 import "dotenv/config";
 

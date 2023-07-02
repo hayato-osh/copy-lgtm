@@ -1,10 +1,14 @@
-import * as style from "./github-pr.module.pcss";
-import { copyToClipboard } from "@/utils/copyToClipboard";
 import { sendToBackground } from "@plasmohq/messaging";
 // eslint-disable-next-line import/no-unresolved
 import styleText from "data-text:./github-pr.module.pcss";
-import type { PlasmoCSConfig, PlasmoGetInlineAnchor } from "plasmo";
+
 import { useState } from "react";
+
+import { copyToClipboard } from "@/utils/copyToClipboard";
+
+import * as style from "./github-pr.module.pcss";
+
+import type { PlasmoCSConfig, PlasmoGetInlineAnchor } from "plasmo";
 
 export const config: PlasmoCSConfig = {
   matches: ["https://github.com/*"],
