@@ -1,6 +1,6 @@
 <div style="text-align:center">
   <img src="./assets/icon.png" alt="LGTM Extension's icon" width="80px" />
-  <h1 style="margin-top:12px;">LGTM Extension</h1>
+  <h1 style="margin-top:12px;">Copy LGTM</h1>
 </div>
 
 <h2>What is this app?</h2>
