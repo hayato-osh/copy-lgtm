@@ -4,7 +4,7 @@ type Response = {
   images: string[];
 };
 
-const handler: PlasmoMessaging.MessageHandler<{}, Response> = async (
+const handler: PlasmoMessaging.MessageHandler<any, Response> = async (
   _,
   res,
 ) => {

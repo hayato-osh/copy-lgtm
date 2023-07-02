@@ -41,6 +41,8 @@ keys.json
 # typescript
 .tsbuildinfo
 
-
 # firebase sdk
 credential.json
+
+# config files
+.eslintcache

@@ -1,10 +1,13 @@
 #!/usr/bin/env -S node --loader ts-node/esm
+import fs from "fs/promises";
+
+import { createRequire } from "module";
+
 import axios from "axios";
 import admin from "firebase-admin";
-import fs from "fs/promises";
+
 import sharp from "sharp";
 import "dotenv/config";
-import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
 const serviceAccount = require("../credential.json");
@@ -85,7 +88,9 @@ async function main() {
   }));
   const processedImageUrls: string[] = [];
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const image of images) {
+    // eslint-disable-next-line no-await-in-loop
     const url = await processImage(image);
     processedImageUrls.push(url);
   }
