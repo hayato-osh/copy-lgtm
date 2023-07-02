@@ -1,0 +1,19 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "cSpell.words": [
+    "Plasmo",
+    "plasmohq",
+    "hayato",
+    "pcss",
+    "diffbar",
+    "camelcase"
+  ],
+  // prettierの自動整形
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // elintの自動整形
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}
