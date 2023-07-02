@@ -1,6 +1,6 @@
 {
-  "name": "lgtm",
-  "displayName": "LGTM",
+  "name": "copy-lgtm",
+  "displayName": "Copy LGTM",
   "version": "0.1.0",
   "description": "Extension that allows you to place a button on the GitHub pull request screen that allows you to copy LGTM images.",
   "author": "hayato",
