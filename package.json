@@ -11,7 +11,9 @@
     "package": "plasmo package",
     "upload": "./scripts/createLGTM.mts",
     "lint:prettier": "prettier --check .",
-    "fix:prettier": "prettier --write ."
+    "lint:eslint": "eslint --cache .",
+    "fix:prettier": "prettier --write .",
+    "fix:eslint": "eslint --cache . --fix"
   },
   "dependencies": {
     "@plasmohq/messaging": "^0.4.0",
