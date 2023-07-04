@@ -1,12 +1,13 @@
 import { sendToBackground } from "@plasmohq/messaging";
-// eslint-disable-next-line import/no-unresolved
-import styleText from "data-text:./github-pr.module.pcss";
 
 import { useState } from "react";
 
+import { Popover } from "@/components/Popover/Popover";
 import { copyToClipboard } from "@/utils/copyToClipboard";
 
 import * as style from "./github-pr.module.pcss";
+
+import { styleText } from "./style";
 
 import type { PlasmoCSConfig, PlasmoGetInlineAnchor } from "plasmo";
 
@@ -48,14 +49,17 @@ const PlasmoInline = () => {
   };
 
   return (
-    <button
-      type="button"
-      onClick={onClickCopyLGTM}
-      className={style.btn}
-      disabled={isCopied}
+    <Popover
+      open={isCopied}
+      onOpenChange={onClickCopyLGTM}
+      trigger={
+        <button type="button" className={style.btn} disabled={isCopied}>
+          Copy LGTM
+        </button>
+      }
     >
-      {isCopied ? "Copied!" : "Copy LGTM"}
-    </button>
+      Copied!
+    </Popover>
   );
 };
 
