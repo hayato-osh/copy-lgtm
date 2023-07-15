@@ -1,6 +1,6 @@
 import { sendToBackground } from "@plasmohq/messaging";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { Popover } from "@/components/Popover/Popover";
 import { copyToClipboard } from "@/utils/copyToClipboard";
@@ -27,7 +27,11 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = () =>
 const PlasmoInline = () => {
   const [isCopied, setIsCopied] = useState(false);
 
-  const onClickCopyLGTM = async () => {
+  const onClickCopyLGTM = useCallback(async (open: boolean) => {
+    if (!open) {
+      return;
+    }
+
     const res = await sendToBackground<any, { images: string[] }>({
       name: "getImages",
     });
@@ -46,7 +50,7 @@ const PlasmoInline = () => {
           setIsCopied(false);
         }, 3000);
       });
-  };
+  }, []);
 
   return (
     <Popover
