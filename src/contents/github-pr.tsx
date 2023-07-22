@@ -1,5 +1,13 @@
 import { sendToBackground } from "@plasmohq/messaging";
 
+/**
+ * コンポーネントのスタイルを読み込む
+ */
+// eslint-disable-next-line import/no-unresolved
+import githubStyle from "data-text:./github-pr.module.pcss";
+// eslint-disable-next-line import/no-unresolved
+import popoverStyle from "data-text:@/components/Popover/Popover.module.pcss";
+
 import { useCallback, useState } from "react";
 
 import { Popover } from "@/components/Popover/Popover";
@@ -7,9 +15,9 @@ import { copyToClipboard } from "@/utils/copyToClipboard";
 
 import * as style from "./github-pr.module.pcss";
 
-import { styleText } from "./style";
-
 import type { PlasmoCSConfig, PlasmoGetInlineAnchor } from "plasmo";
+
+const styleText = `${githubStyle} ${popoverStyle}`;
 
 export const config: PlasmoCSConfig = {
   matches: ["https://github.com/*"],
