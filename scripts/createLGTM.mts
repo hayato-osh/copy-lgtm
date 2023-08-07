@@ -1,18 +1,18 @@
 #!/usr/bin/env -S node --loader ts-node/esm
-import fs from "fs/promises";
+import { writeFile } from "fs/promises";
 
 import { createRequire } from "module";
+import { URLSearchParams } from "url";
 
 import axios from "axios";
 import admin from "firebase-admin";
 
-import sharp from "sharp";
 import "dotenv/config";
+import { uploadImage, uploadJson } from "./firebase/upload.mjs";
+import { processImage } from "./sharp/processImage.mjs";
 
 const require = createRequire(import.meta.url);
 const serviceAccount = require("../credential.json");
-
-const lgtmText = await fs.readFile("assets/lgtm.svg");
 
 // Firebase初期化
 admin.initializeApp({
@@ -22,80 +22,55 @@ admin.initializeApp({
 
 const bucket = admin.storage().bucket();
 
-// Firebase Storageにアップロード
-async function uploadImage(fileName: string, buffer: Buffer) {
-  const file = bucket.file(fileName || "");
+// ================================ main ===============================
+const resourceLength = 20;
 
-  try {
-    await file.save(buffer, {
-      metadata: {
-        contentType: "image/jpeg",
-      },
-    });
+const category = [
+  "animals",
+  "places",
+  "computer",
+  "buildings",
+  "food",
+  "transportation",
+  "travel",
+];
 
-    console.log(`Success: ${fileName} uploaded.`);
-  } catch (error) {
-    console.error(error);
-  }
+const apiEndpoint = new URLSearchParams({
+  key: process.env.PIXABAY_API_KEY || "",
+  image_type: "photo",
+  per_page: resourceLength.toString(),
+  safesearch: "true",
+  orientation: "horizontal",
+});
+category.forEach((c) => apiEndpoint.append("category", c));
 
-  await file.makePublic();
-  const publicUrl = `https://storage.googleapis.com/${bucket.name}/${file.name}`;
-  return publicUrl;
+const pixabayResponse = await axios.get(
+  `https://pixabay.com/api?${apiEndpoint.toString()}`,
+);
+
+if (pixabayResponse.status >= 400) {
+  throw new Error("Failed to fetch images from Pixabay");
 }
 
-// 画像を加工
-async function processImage(image: { url: string; id: string }) {
-  const response = await axios.get(image.url, { responseType: "arraybuffer" });
-  const imageBuffer = response.data;
+const images = pixabayResponse.data.hits.map((hit) => ({
+  url: hit.largeImageURL,
+  id: hit.id,
+}));
+const processedImageUrls: string[] = [];
 
-  // sharpを使用して画像にテキストを追加
-  const outputBuffer = await sharp(imageBuffer)
-    .composite([{ input: Buffer.from(lgtmText), gravity: "center" }])
-    .resize(2560, 1440)
-    .jpeg()
-    .toBuffer();
-
-  const url = await uploadImage(image.id, outputBuffer);
-  return url;
+// eslint-disable-next-line no-restricted-syntax
+for (const image of images) {
+  // eslint-disable-next-line no-await-in-loop
+  const buffer = await processImage(image);
+  // eslint-disable-next-line no-await-in-loop
+  const url = await uploadImage(bucket, `lgtm/${image.id}`, buffer);
+  processedImageUrls.push(url);
 }
 
-// Firebase Storageに画像URLが入ったjsonをアップロード
-async function uploadJson(imageUrls: string[]) {
-  const file = bucket.file("imageUrls.json");
+await writeFile(
+  "uploaded/imagesUrls.json",
+  JSON.stringify(processedImageUrls),
+  "utf8",
+);
 
-  try {
-    await file.save(JSON.stringify(imageUrls), {
-      metadata: {
-        contentType: "application/json",
-      },
-    });
-
-    console.log(`Success: imageUrls.json uploaded.`);
-  } catch (error) {
-    console.error(error);
-  }
-
-  await file.makePublic();
-}
-
-async function main() {
-  const pixabayResponse = await axios.get(
-    `https://pixabay.com/api/?key=${process.env.PIXABAY_API_KEY}&image_type=photo`,
-  );
-  const images = pixabayResponse.data.hits.map((hit) => ({
-    url: hit.largeImageURL,
-    id: hit.id,
-  }));
-  const processedImageUrls: string[] = [];
-
-  // eslint-disable-next-line no-restricted-syntax
-  for (const image of images) {
-    // eslint-disable-next-line no-await-in-loop
-    const url = await processImage(image);
-    processedImageUrls.push(url);
-  }
-
-  await uploadJson(processedImageUrls);
-}
-
-main().catch(console.error);
+await uploadJson(bucket, processedImageUrls);
