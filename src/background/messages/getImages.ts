@@ -13,7 +13,7 @@ const handler: PlasmoMessaging.MessageHandler<any, Response> = async (
   }
 
   const response = await fetch(process.env.PLASMO_PUBLIC_IMAGES_JSON, {
-    cache: "force-cache",
+    cache: "default",
   });
   const images: string[] = JSON.parse(await response.text());
 
