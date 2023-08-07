@@ -63,7 +63,7 @@ for (const image of images) {
   // eslint-disable-next-line no-await-in-loop
   const buffer = await processImage(image);
   // eslint-disable-next-line no-await-in-loop
-  const url = await uploadImage(bucket, image.id, buffer);
+  const url = await uploadImage(bucket, `lgtm/${image.id}`, buffer);
   processedImageUrls.push(url);
 }
 
