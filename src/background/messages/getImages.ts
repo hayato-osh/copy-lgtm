@@ -12,10 +12,21 @@ const handler: PlasmoMessaging.MessageHandler<any, Response> = async (
     throw new Error("PLASMO_PUBLIC_IMAGES_JSON is not defined");
   }
 
-  const response = await fetch(process.env.PLASMO_PUBLIC_IMAGES_JSON, {
-    cache: "force-cache",
+  const endpoint = process.env.PLASMO_PUBLIC_IMAGES_JSON;
+
+  const response = await fetch(`${endpoint}/imageUrls.json`, {
+    cache: "default",
   });
-  const images: string[] = JSON.parse(await response.text());
+
+  let images: string[] = [];
+
+  if (response.ok) {
+    images = JSON.parse(await response.text());
+  } else {
+    Array.from({ length: 3 }).forEach(async (_, i) => {
+      images.push(`${endpoint}/sample/lgtm${i}`);
+    });
+  }
 
   res.send({
     images,
