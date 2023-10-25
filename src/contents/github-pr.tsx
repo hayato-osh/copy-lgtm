@@ -35,6 +35,10 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = () =>
 const PlasmoInline = () => {
   const [isCopied, setIsCopied] = useState(false);
 
+  const textarea = document.querySelector<HTMLTextAreaElement>(
+    "[placeholder='Leave a comment']",
+  );
+
   const onClickCopyLGTM = useCallback(async (open: boolean) => {
     if (!open) {
       return;
@@ -58,6 +62,9 @@ const PlasmoInline = () => {
           setIsCopied(false);
         }, 3000);
       });
+
+    // テキストエリアに貼り付ける
+    textarea.value = clipboardText;
   }, []);
 
   return (
