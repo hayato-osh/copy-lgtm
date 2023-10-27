@@ -11,7 +11,6 @@ import popoverStyle from "data-text:@/components/Popover/Popover.module.pcss";
 import { useCallback, useState } from "react";
 
 import { Popover } from "@/components/Popover/Popover";
-import { copyToClipboard } from "@/utils/copyToClipboard";
 
 import * as style from "./github-pr.module.pcss";
 
@@ -49,22 +48,15 @@ const PlasmoInline = () => {
     });
     // imagesの中から、ランダムに1つ選択
     const image = res.images[Math.floor(Math.random() * res.images.length)];
-    const clipboardText = `![LGTM](${image})`;
-    await copyToClipboard(clipboardText)
-      .then(() => {
-        setIsCopied(true);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setIsCopied(false);
-        }, 3000);
-      });
 
     // テキストエリアに貼り付ける
-    textarea.value = clipboardText;
+    textarea.value = `![LGTM](${image})`;
+
+    setIsCopied(true);
+
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 3000);
   }, []);
 
   return (
@@ -77,7 +69,7 @@ const PlasmoInline = () => {
         </button>
       }
     >
-      Copied!
+      Success!
     </Popover>
   );
 };
