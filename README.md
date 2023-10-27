@@ -2,8 +2,7 @@
   <img src="./assets/icon.png" alt="Copy LGTM extension's icon" width="80px" />
   <h1 style="margin-top:12px;">Copy LGTM</h1>
   <p>The easiest way to copy LGTM images on GitHub.</p>
-  <video src="https://github.com/hayato-osh/copy-lgtm/assets/74091672/82019b2d-8c3b-4f4e-a49d-4937a530dc81
-">
+  <video src="https://github.com/hayato-osh/copy-lgtm/assets/74091672/c1b068a1-0b4f-4723-8aaa-dae3fc8632a0">
     Demo
   </video>
 </div>
