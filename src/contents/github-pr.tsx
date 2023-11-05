@@ -34,9 +34,9 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = () =>
 const PlasmoInline = () => {
   const [isCopied, setIsCopied] = useState(false);
 
-  const textarea = document.querySelector<HTMLTextAreaElement>(
-    "[placeholder='Leave a comment']",
-  );
+  const textarea = document.getElementById(
+    "pull_request_review_body",
+  ) as HTMLTextAreaElement;
 
   const onClickCopyLGTM = useCallback(async (open: boolean) => {
     if (!open) {
