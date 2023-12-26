@@ -1,4 +1,5 @@
 import { sendToBackground } from "@plasmohq/messaging";
+import { Storage } from "@plasmohq/storage";
 
 /**
  * コンポーネントのスタイルを読み込む
@@ -33,6 +34,7 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = () =>
 
 const PlasmoInline = () => {
   const [isCopied, setIsCopied] = useState(false);
+  const storage = new Storage();
 
   const textarea = document.getElementById(
     "pull_request_review_body",
@@ -51,6 +53,21 @@ const PlasmoInline = () => {
 
     // テキストエリアに貼り付ける
     textarea.value = `![LGTM](${image})`;
+
+    try {
+      const isAutomaticallySelect = await storage.get("AutomaticallySelect");
+
+      // 自動的にApproveを選択する
+      if (isAutomaticallySelect) {
+        const approveRadioButton = document.getElementById(
+          "pull_request_review[event]_approve",
+        ) as HTMLInputElement;
+
+        approveRadioButton.checked = true;
+      }
+    } catch (e) {
+      console.error(e);
+    }
 
     setIsCopied(true);
 
