@@ -4,8 +4,6 @@ import { useStorage } from "@plasmohq/storage/hook";
 import githubIcon from "data-base64:~assets/github-icon.svg";
 // eslint-disable-next-line import/no-unresolved
 import logo from "data-base64:~assets/logo.svg";
-// eslint-disable-next-line import/no-unresolved
-import styles from "data-text:./index.module.pcss";
 
 import { Checkbox } from "@/components/Checkbox/Checkbox";
 import { Label } from "@/components/Label/Label";
@@ -13,14 +11,6 @@ import { Label } from "@/components/Label/Label";
 import * as style from "./index.module.pcss";
 
 import type { ChangeEvent } from "react";
-
-const styleText = `${styles}`;
-
-export const getStyle = () => {
-  const style = document.createElement("style");
-  style.textContent = styleText;
-  return style;
-};
 
 const popup = () => {
   const [isChecked, setIsChecked] = useStorage<boolean>(

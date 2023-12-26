@@ -1,5 +1,4 @@
 import { sendToBackground } from "@plasmohq/messaging";
-// import { useStorage } from "@plasmohq/storage/hook";
 import { Storage } from "@plasmohq/storage";
 
 /**
