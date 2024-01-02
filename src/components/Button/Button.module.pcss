@@ -12,7 +12,7 @@
   box-shadow: var(--color-btn-shadow) var(--color-btn-inset-shadow);
   border: 1px solid;
   border-radius: 6px;
-  border-color: var(--color-btn-border);
+  border-color: var(--color-btn-border, #1f883d);
   cursor: pointer;
 }
 
@@ -31,7 +31,6 @@
 
 .btn:hover:not(:disabled) {
   background-color: var(--color-btn-hover-bg, #1a7f37);
-  border-color: var(--color-btn-hover-border);
   transition-duration: 0.1s;
   text-decoration: none;
 }
