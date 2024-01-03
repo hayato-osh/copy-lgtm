@@ -20,18 +20,42 @@ const popup = () => {
     (v) => (v === undefined ? false : v),
   );
 
-  const [inputLength, setInputLength] = useState(1);
+  const [initialUrls, setInitialUrls] = useState<string[]>([]);
+
+  const [urls, setUrls] = useStorage<string[]>("urls", (v) =>
+    // 空文字列は除外する
+    v === undefined ? [] : v.filter((url) => url !== ""),
+  );
+
+  const initialUrlsLength = initialUrls.length;
+
+  // key を固定するために、初期値を保持する
+  if (urls.length !== 0 && initialUrlsLength === 0) {
+    setInitialUrls(urls);
+  }
 
   const onChangeCheck = async (e: ChangeEvent<HTMLInputElement>) => {
     await setIsChecked(e.target.checked);
   };
 
-  const onClickIncreaseButton = () => {
+  const onChangeValue = async (e: ChangeEvent<HTMLInputElement>, i: number) => {
+    const { value } = e.target;
+    await setUrls((currentUrls) => {
+      const newUrls = [...currentUrls];
+      newUrls[i] = value;
+
+      return newUrls;
+    });
+  };
+
+  const disabledIncreaseButton = initialUrlsLength >= 8 || urls.at(-1) === "";
+
+  const onClickIncreaseButton = async () => {
     // 8個以上は登録できないようにする
-    if (inputLength > 8) {
+    if (initialUrlsLength > 8) {
       return;
     }
-    setInputLength((currentLength) => currentLength + 1);
+    await setUrls((currentUrls) => [...currentUrls, ""]);
   };
 
   return (
@@ -54,15 +78,24 @@ const popup = () => {
       </div>
       <div className={style.inputControl}>
         <Label className={style.inputLabel}>
-          Enter URL
-          {[...Array(inputLength).keys()].map((value) => (
-            <Input key={value} />
+          LGTM Image URLs (format: https://*)
+          {[...Array(urls.length).keys()].map((_value, i) => (
+            <Input
+              key={initialUrls[i]}
+              type="url"
+              value={urls[i]}
+              onChange={(e) => onChangeValue(e, i)}
+              autoFocus={i === urls.length - 1}
+            />
           ))}
         </Label>
-        <Button onClick={onClickIncreaseButton} disabled={inputLength >= 8}>
+        <Button
+          onClick={onClickIncreaseButton}
+          disabled={disabledIncreaseButton}
+        >
           Increase Input
         </Button>
-        {inputLength >= 8 && (
+        {initialUrlsLength >= 8 && (
           <span>※No more than 8 images can be registered</span>
         )}
       </div>
