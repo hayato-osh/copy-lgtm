@@ -46,11 +46,23 @@ const PlasmoInline = () => {
     }
 
     try {
-      const res = await sendToBackground<any, { images: string[] }>({
-        name: "getImages",
-      });
+      const lgtmImages = await storage.get<string[]>("urls");
+      // https:// で始まるURLのみを抽出
+      const filteredImages = lgtmImages.filter((url) =>
+        url.startsWith("https://"),
+      );
+
+      let images = filteredImages;
+
+      if (images.length === 0) {
+        const res = await sendToBackground<any, { images: string[] }>({
+          name: "getImages",
+        });
+
+        images = res.images;
+      }
       // imagesの中から、ランダムに1つ選択
-      const image = res.images[Math.floor(Math.random() * res.images.length)];
+      const image = images[Math.floor(Math.random() * images.length)];
 
       // テキストエリアに貼り付ける
       textarea.value = `![LGTM](${image})`;
