@@ -45,16 +45,28 @@ const PlasmoInline = () => {
       return;
     }
 
-    const res = await sendToBackground<any, { images: string[] }>({
-      name: "getImages",
-    });
-    // imagesの中から、ランダムに1つ選択
-    const image = res.images[Math.floor(Math.random() * res.images.length)];
-
-    // テキストエリアに貼り付ける
-    textarea.value = `![LGTM](${image})`;
-
     try {
+      const lgtmImages = await storage.get<string[]>("urls");
+      // https:// で始まるURLのみを抽出
+      const filteredImages = lgtmImages.filter((url) =>
+        url.startsWith("https://"),
+      );
+
+      let images = filteredImages;
+
+      if (images.length === 0) {
+        const res = await sendToBackground<any, { images: string[] }>({
+          name: "getImages",
+        });
+
+        images = res.images;
+      }
+      // imagesの中から、ランダムに1つ選択
+      const image = images[Math.floor(Math.random() * images.length)];
+
+      // テキストエリアに貼り付ける
+      textarea.value = `![LGTM](${image})`;
+
       const isAutomaticallySelect = await storage.get("AutomaticallySelect");
 
       // 自動的にApproveを選択する
@@ -65,15 +77,15 @@ const PlasmoInline = () => {
 
         approveRadioButton.checked = true;
       }
+
+      setIsCopied(true);
+
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 3000);
     } catch (e) {
       console.error(e);
     }
-
-    setIsCopied(true);
-
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 3000);
   }, []);
 
   return (
