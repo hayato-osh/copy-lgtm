@@ -46,7 +46,7 @@ const PlasmoInline = () => {
     }
 
     try {
-      const lgtmImages = await storage.get<string[]>("urls");
+      const lgtmImages = (await storage.get<string[]>("urls")) ?? [];
       // https:// で始まるURLのみを抽出
       const filteredImages = lgtmImages.filter((url) =>
         url.startsWith("https://"),
@@ -67,7 +67,8 @@ const PlasmoInline = () => {
       // テキストエリアに貼り付ける
       textarea.value = `![LGTM](${image})`;
 
-      const isAutomaticallySelect = await storage.get("AutomaticallySelect");
+      const isAutomaticallySelect =
+        (await storage.get<boolean>("AutomaticallySelect")) ?? false;
 
       // 自動的にApproveを選択する
       if (isAutomaticallySelect) {
