@@ -64,8 +64,15 @@ const PlasmoInline = () => {
       // imagesの中から、ランダムに1つ選択
       const image = images[Math.floor(Math.random() * images.length)];
 
-      // テキストエリアに貼り付ける
-      textarea.value = `![LGTM](${image})`;
+      // すでに貼付け済みの場合はスキップ
+      if (!textarea.value.includes("![LGTM](")) {
+        // テキストエリアに貼り付ける
+        if (textarea.value === "") {
+          textarea.value = `![LGTM](${image})`;
+        } else {
+          textarea.value = `${textarea.value}\n![LGTM](${image})`;
+        }
+      }
 
       const isAutomaticallySelect =
         (await storage.get<boolean>("AutomaticallySelect")) ?? false;
