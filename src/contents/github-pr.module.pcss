@@ -9,33 +9,54 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   line-height: 20px;
-  color: var(--color-btn-text);
-  background-color: var(--color-btn-bg);
-  box-shadow: var(--color-btn-shadow) var(--color-btn-inset-shadow);
   border: 1px solid;
   border-radius: 6px;
-  border-color: var(--color-btn-border);
+
+  color: var(--button-default-fgColor-rest, var(--color-btn-text));
+  fill: var(--fgColor-muted, var(--color-fg-muted));
+  background-color: var(--button-default-bgColor-rest, var(--color-btn-bg));
+  border-color: var(--button-default-borderColor-rest, var(--color-btn-border));
+  box-shadow: var(--button-default-shadow-resting, var(--color-btn-shadow)),
+    var(--button-default-shadow-inset, var(--color-btn-inset-shadow));
   cursor: pointer;
 }
 
 .btn:disabled {
-  fill: var(--color-primer-fg-disabled);
-  background-color: var(--color-btn-bg);
-  border-color: var(--color-btn-border);
-  color: var(--color-primer-fg-disabled);
+  fill: var(--control-fgColor-disabled, var(--color-primer-fg-disabled));
+  background-color: var(--button-default-bgColor-disabled, var(--color-btn-bg));
+  border-color: var(
+    --button-default-borderColor-disabled,
+    var(--color-btn-border)
+  );
+  color: var(--control-fgColor-disabled, var(--color-primer-fg-disabled));
   box-shadow: none;
   cursor: not-allowed;
 }
 
 .btn:active {
-  background-color: var(--color-btn-active-bg);
-  border-color: var(--color-btn-active-border);
   transition: none;
 }
 
+.btn:active:not(:disabled) {
+  background-color: var(
+    --button-default-bgColor-active,
+    var(--color-btn-active-bg)
+  );
+  border-color: var(
+    --button-default-borderColor-active,
+    var(--color-btn-active-border)
+  );
+}
+
 .btn:hover:not(:disabled) {
-  background-color: var(--color-btn-hover-bg);
-  border-color: var(--color-btn-hover-border);
+  background-color: var(
+    --button-default-bgColor-hover,
+    var(--color-btn-hover-bg)
+  );
+  border-color: var(
+    --button-default-borderColor-hover,
+    var(--color-btn-hover-border)
+  );
   transition-duration: 0.1s;
   text-decoration: none;
 }
@@ -47,7 +68,7 @@
 }
 
 .btn:focus-visible {
-  outline: 2px solid var(--color-accent-fg);
+  outline: 2px solid var(--focus-outlineColor, var(--color-accent-fg));
   outline-offset: -2px;
   box-shadow: none;
 }
