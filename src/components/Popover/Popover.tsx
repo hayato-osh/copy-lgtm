@@ -27,7 +27,6 @@ export const Popover = ({
       </PopoverPrimitive.Trigger>
       <PopoverPrimitive.Content sideOffset={5} className={styles.content}>
         {children}
-        <PopoverPrimitive.Arrow className={styles.arrow} />
       </PopoverPrimitive.Content>
     </PopoverPrimitive.Root>
   );
