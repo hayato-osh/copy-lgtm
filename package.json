@@ -55,5 +55,14 @@
       "https://github.com/*",
       "https://storage.googleapis.com/*"
     ]
+  },
+  "pnpm": {
+    "overrides": {
+      "sharp@<0.32.6": ">=0.32.6",
+      "msgpackr@<1.10.1": ">=1.10.1",
+      "@babel/traverse@<7.23.2": ">=7.23.2",
+      "protobufjs@>=7.0.0 <7.2.5": ">=7.2.5",
+      "svelte@<4.2.19": ">=4.2.19"
+    }
   }
 }
