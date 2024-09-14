@@ -1,7 +1,7 @@
 {
   "name": "copy-lgtm",
   "displayName": "Copy LGTM",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "Extension that allows you to place a button on the GitHub pull request screen that allows you to copy LGTM images.",
   "author": "hayato",
   "type": "module",
@@ -19,9 +19,9 @@
   },
   "dependencies": {
     "@plasmohq/messaging": "^0.5.0",
-    "@plasmohq/storage": "^1.9.0",
-    "@radix-ui/react-popover": "^1.0.6",
-    "axios": "^1.6.0",
+    "@plasmohq/storage": "^1.12.0",
+    "@radix-ui/react-popover": "^1.1.1",
+    "axios": "^1.7.7",
     "npm-run-all": "^4.1.5",
     "plasmo": "0.81.0",
     "react": "18.2.0",
@@ -33,21 +33,21 @@
     "@types/node": "20.2.4",
     "@types/react": "18.2.7",
     "@types/react-dom": "18.2.4",
-    "@typescript-eslint/eslint-plugin": "^5.60.1",
-    "@typescript-eslint/parser": "^5.60.1",
-    "dotenv": "^16.3.1",
-    "eslint": "^8.44.0",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-import-resolver-typescript": "^3.5.5",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "firebase-admin": "^11.9.0",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-import-resolver-typescript": "^3.6.3",
+    "eslint-plugin-import": "^2.30.0",
+    "eslint-plugin-jsx-a11y": "^6.10.0",
+    "eslint-plugin-react": "^7.36.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "firebase-admin": "^11.11.1",
     "prettier": "2.8.8",
-    "sharp": "^0.33.2",
-    "ts-node": "^10.9.1",
+    "sharp": "^0.33.5",
+    "ts-node": "^10.9.2",
     "typescript": "5.0.4"
   },
   "manifest": {
@@ -55,5 +55,14 @@
       "https://github.com/*",
       "https://storage.googleapis.com/*"
     ]
+  },
+  "pnpm": {
+    "overrides": {
+      "sharp@<0.32.6": ">=0.32.6",
+      "msgpackr@<1.10.1": ">=1.10.1",
+      "@babel/traverse@<7.23.2": ">=7.23.2",
+      "protobufjs@>=7.0.0 <7.2.5": ">=7.2.5",
+      "svelte@<4.2.19": ">=4.2.19"
+    }
   }
 }
