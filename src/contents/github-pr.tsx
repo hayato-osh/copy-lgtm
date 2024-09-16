@@ -65,12 +65,13 @@ const PlasmoInline = () => {
       const image = images[Math.floor(Math.random() * images.length)];
 
       // すでに貼付け済みの場合はスキップ
-      if (!textarea.value.includes("![LGTM](")) {
+      if (!textarea.value.includes('<img alt="LGTM"')) {
+        const img = `<img alt="LGTM" src="${image}" width="600px" />`;
         // テキストエリアに貼り付ける
         if (textarea.value === "") {
-          textarea.value = `![LGTM](${image})`;
+          textarea.value = img;
         } else {
-          textarea.value = `${textarea.value}\n![LGTM](${image})`;
+          textarea.value = `${textarea.value}\n${img}`;
         }
       }
 
