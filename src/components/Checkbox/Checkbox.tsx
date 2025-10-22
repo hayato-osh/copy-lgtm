@@ -1,6 +1,5 @@
-import * as styles from "./Checkbox.module.pcss";
-
 import type { ComponentPropsWithoutRef } from "react";
+import * as styles from "./Checkbox.module.pcss";
 
 type Props = ComponentPropsWithoutRef<"input">;
 

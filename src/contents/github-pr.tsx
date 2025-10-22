@@ -1,19 +1,14 @@
-import { sendToBackground } from "@plasmohq/messaging";
-import { Storage } from "@plasmohq/storage";
-
 /**
  * コンポーネントのスタイルを読み込む
  */
 import githubStyle from "data-text:./github-pr.module.pcss";
 import popoverStyle from "data-text:@/components/Popover/Popover.module.pcss";
-
-import { useCallback, useState } from "react";
-
-import { Popover } from "@/components/Popover/Popover";
-
-import * as style from "./github-pr.module.pcss";
-
+import { sendToBackground } from "@plasmohq/messaging";
+import { Storage } from "@plasmohq/storage";
 import type { PlasmoCSConfig, PlasmoGetInlineAnchor } from "plasmo";
+import { useCallback, useState } from "react";
+import { Popover } from "@/components/Popover/Popover";
+import * as style from "./github-pr.module.pcss";
 
 const styleText = `${githubStyle} ${popoverStyle}`;
 
@@ -35,65 +30,68 @@ const PlasmoInline = () => {
   const storage = new Storage();
 
   const textarea = document.getElementById(
-    "pull_request_review_body"
+    "pull_request_review_body",
   ) as HTMLTextAreaElement;
 
-  const onClickCopyLGTM = useCallback(async (open: boolean) => {
-    if (!open) {
-      return;
-    }
-
-    try {
-      const lgtmImages = (await storage.get<string[]>("urls")) ?? [];
-      // https:// で始まるURLのみを抽出
-      const filteredImages = lgtmImages.filter((url) =>
-        url.startsWith("https://")
-      );
-
-      let images = filteredImages;
-
-      if (images.length === 0) {
-        const res = await sendToBackground<any, { images: string[] }>({
-          name: "getImages",
-        });
-
-        images = res.images;
+  const onClickCopyLGTM = useCallback(
+    async (open: boolean) => {
+      if (!open) {
+        return;
       }
-      // imagesの中から、ランダムに1つ選択
-      const image = images[Math.floor(Math.random() * images.length)];
 
-      // すでに貼付け済みの場合はスキップ
-      if (!textarea.value.includes('<img alt="LGTM"')) {
-        const img = `<img alt="LGTM" src="${image}" width="600px" />`;
-        // テキストエリアに貼り付ける
-        if (textarea.value === "") {
-          textarea.value = img;
-        } else {
-          textarea.value = `${textarea.value}\n${img}`;
+      try {
+        const lgtmImages = (await storage.get<string[]>("urls")) ?? [];
+        // https:// で始まるURLのみを抽出
+        const filteredImages = lgtmImages.filter((url) =>
+          url.startsWith("https://"),
+        );
+
+        let images = filteredImages;
+
+        if (images.length === 0) {
+          const res = await sendToBackground<any, { images: string[] }>({
+            name: "getImages",
+          });
+
+          images = res.images;
         }
+        // imagesの中から、ランダムに1つ選択
+        const image = images[Math.floor(Math.random() * images.length)];
+
+        // すでに貼付け済みの場合はスキップ
+        if (!textarea.value.includes('<img alt="LGTM"')) {
+          const img = `<img alt="LGTM" src="${image}" width="600px" />`;
+          // テキストエリアに貼り付ける
+          if (textarea.value === "") {
+            textarea.value = img;
+          } else {
+            textarea.value = `${textarea.value}\n${img}`;
+          }
+        }
+
+        const isAutomaticallySelect =
+          (await storage.get<boolean>("AutomaticallySelect")) ?? false;
+
+        // 自動的にApproveを選択する
+        if (isAutomaticallySelect) {
+          const approveRadioButton = document.getElementById(
+            "pull_request_review[event]_approve",
+          ) as HTMLInputElement;
+
+          approveRadioButton.checked = true;
+        }
+
+        setIsCopied(true);
+
+        setTimeout(() => {
+          setIsCopied(false);
+        }, 3000);
+      } catch (e) {
+        console.error(e);
       }
-
-      const isAutomaticallySelect =
-        (await storage.get<boolean>("AutomaticallySelect")) ?? false;
-
-      // 自動的にApproveを選択する
-      if (isAutomaticallySelect) {
-        const approveRadioButton = document.getElementById(
-          "pull_request_review[event]_approve"
-        ) as HTMLInputElement;
-
-        approveRadioButton.checked = true;
-      }
-
-      setIsCopied(true);
-
-      setTimeout(() => {
-        setIsCopied(false);
-      }, 3000);
-    } catch (e) {
-      console.error(e);
-    }
-  }, []);
+    },
+    [storage, textarea],
+  );
 
   return (
     <Popover

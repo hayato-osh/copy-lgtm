@@ -1,6 +1,5 @@
-import styles from "./Button.module.pcss";
-
 import type { ComponentPropsWithoutRef } from "react";
+import styles from "./Button.module.pcss";
 
 type Props = ComponentPropsWithoutRef<"button">;
 

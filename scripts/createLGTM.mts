@@ -1,9 +1,8 @@
 #!/usr/bin/env -S node --loader ts-node/esm
-import { writeFile } from "fs/promises";
 
-import { createRequire } from "module";
-import { URLSearchParams } from "url";
-
+import { writeFile } from "node:fs/promises";
+import { createRequire } from "node:module";
+import { URLSearchParams } from "node:url";
 import axios from "axios";
 import admin from "firebase-admin";
 
@@ -42,10 +41,12 @@ const apiEndpoint = new URLSearchParams({
   safesearch: "true",
   orientation: "horizontal",
 });
-category.forEach((c) => apiEndpoint.append("category", c));
+for (const c of category) {
+  apiEndpoint.append("category", c);
+}
 
 const pixabayResponse = await axios.get(
-  `https://pixabay.com/api?${apiEndpoint.toString()}`
+  `https://pixabay.com/api?${apiEndpoint.toString()}`,
 );
 
 if (pixabayResponse.status >= 400) {
@@ -67,7 +68,7 @@ for (const image of images) {
 await writeFile(
   "uploaded/imagesUrls.json",
   JSON.stringify(processedImageUrls),
-  "utf8"
+  "utf8",
 );
 
 await uploadJson(bucket, processedImageUrls);

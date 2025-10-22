@@ -1,6 +1,6 @@
 #!/usr/bin/env -S node --loader ts-node/esm
-import { readFile } from "fs/promises";
 
+import { readFile } from "node:fs/promises";
 import axios from "axios";
 
 import sharp from "sharp";

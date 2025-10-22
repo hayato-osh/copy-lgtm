@@ -1,6 +1,5 @@
-import * as styles from "./Label.module.pcss";
-
 import type { ComponentPropsWithoutRef } from "react";
+import * as styles from "./Label.module.pcss";
 
 type Props = ComponentPropsWithoutRef<"label">;
 

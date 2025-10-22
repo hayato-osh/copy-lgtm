@@ -1,9 +1,9 @@
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 
-import {
-  type ComponentProps,
-  type ComponentPropsWithoutRef,
-  type ReactNode,
+import type {
+  ComponentProps,
+  ComponentPropsWithoutRef,
+  ReactNode,
 } from "react";
 
 import * as styles from "./Popover.module.pcss";
