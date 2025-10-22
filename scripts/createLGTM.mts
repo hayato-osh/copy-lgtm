@@ -45,7 +45,7 @@ const apiEndpoint = new URLSearchParams({
 category.forEach((c) => apiEndpoint.append("category", c));
 
 const pixabayResponse = await axios.get(
-  `https://pixabay.com/api?${apiEndpoint.toString()}`,
+  `https://pixabay.com/api?${apiEndpoint.toString()}`
 );
 
 if (pixabayResponse.status >= 400) {
@@ -58,11 +58,8 @@ const images = pixabayResponse.data.hits.map((hit) => ({
 }));
 const processedImageUrls: string[] = [];
 
-// eslint-disable-next-line no-restricted-syntax
 for (const image of images) {
-  // eslint-disable-next-line no-await-in-loop
   const buffer = await processImage(image);
-  // eslint-disable-next-line no-await-in-loop
   const url = await uploadImage(bucket, `lgtm/${image.id}`, buffer);
   processedImageUrls.push(url);
 }
@@ -70,7 +67,7 @@ for (const image of images) {
 await writeFile(
   "uploaded/imagesUrls.json",
   JSON.stringify(processedImageUrls),
-  "utf8",
+  "utf8"
 );
 
 await uploadJson(bucket, processedImageUrls);

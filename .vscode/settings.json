@@ -8,12 +8,5 @@
     "pcss",
     "diffbar",
     "camelcase"
-  ],
-  // prettierの自動整形
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  // elintの自動整形
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
-  }
+  ]
 }

@@ -4,9 +4,7 @@ import { Storage } from "@plasmohq/storage";
 /**
  * コンポーネントのスタイルを読み込む
  */
-// eslint-disable-next-line import/no-unresolved
 import githubStyle from "data-text:./github-pr.module.pcss";
-// eslint-disable-next-line import/no-unresolved
 import popoverStyle from "data-text:@/components/Popover/Popover.module.pcss";
 
 import { useCallback, useState } from "react";
@@ -37,7 +35,7 @@ const PlasmoInline = () => {
   const storage = new Storage();
 
   const textarea = document.getElementById(
-    "pull_request_review_body",
+    "pull_request_review_body"
   ) as HTMLTextAreaElement;
 
   const onClickCopyLGTM = useCallback(async (open: boolean) => {
@@ -49,7 +47,7 @@ const PlasmoInline = () => {
       const lgtmImages = (await storage.get<string[]>("urls")) ?? [];
       // https:// で始まるURLのみを抽出
       const filteredImages = lgtmImages.filter((url) =>
-        url.startsWith("https://"),
+        url.startsWith("https://")
       );
 
       let images = filteredImages;
@@ -81,7 +79,7 @@ const PlasmoInline = () => {
       // 自動的にApproveを選択する
       if (isAutomaticallySelect) {
         const approveRadioButton = document.getElementById(
-          "pull_request_review[event]_approve",
+          "pull_request_review[event]_approve"
         ) as HTMLInputElement;
 
         approveRadioButton.checked = true;

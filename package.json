@@ -9,13 +9,7 @@
     "dev": "plasmo dev",
     "build": "plasmo build",
     "package": "plasmo package",
-    "upload": "./scripts/createLGTM.mts",
-    "lint": "run-s -c lint:*",
-    "lint:prettier": "prettier --check .",
-    "lint:eslint": "eslint --cache .",
-    "fix": "run-s fix:*",
-    "fix:prettier": "prettier --write .",
-    "fix:eslint": "eslint --cache . --fix"
+    "upload": "./scripts/createLGTM.mts"
   },
   "dependencies": {
     "@plasmohq/messaging": "^0.5.0",
@@ -28,24 +22,12 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@plasmohq/prettier-plugin-sort-imports": "3.6.4",
     "@types/chrome": "0.0.237",
     "@types/node": "20.2.4",
     "@types/react": "18.2.7",
     "@types/react-dom": "18.2.4",
-    "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0",
     "dotenv": "^16.4.5",
-    "eslint": "^8.57.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^8.10.0",
-    "eslint-import-resolver-typescript": "^3.6.3",
-    "eslint-plugin-import": "^2.30.0",
-    "eslint-plugin-jsx-a11y": "^6.10.0",
-    "eslint-plugin-react": "^7.36.1",
-    "eslint-plugin-react-hooks": "^4.6.2",
     "firebase-admin": "^11.11.1",
-    "prettier": "2.8.8",
     "sharp": "^0.33.5",
     "ts-node": "^10.9.2",
     "typescript": "5.0.4"

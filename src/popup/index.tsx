@@ -1,8 +1,6 @@
 import { useStorage } from "@plasmohq/storage/hook";
 
-// eslint-disable-next-line import/no-unresolved
 import githubIcon from "data-base64:~assets/github-icon.svg";
-// eslint-disable-next-line import/no-unresolved
 import logo from "data-base64:~assets/logo.svg";
 
 import { useState, type ChangeEvent } from "react";
@@ -17,14 +15,14 @@ import * as style from "./index.module.pcss";
 const popup = () => {
   const [isChecked, setIsChecked] = useStorage<boolean>(
     "AutomaticallySelect",
-    (v) => (v === undefined ? false : v),
+    (v) => (v === undefined ? false : v)
   );
 
   const [initialUrls, setInitialUrls] = useState<string[]>([]);
 
   const [urls, setUrls] = useStorage<string[]>("urls", (v) =>
     // 空文字列は除外する
-    v === undefined ? [] : v.filter((url) => url !== ""),
+    v === undefined ? [] : v.filter((url) => url !== "")
   );
 
   const initialUrlsLength = initialUrls.length;
