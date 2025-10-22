@@ -19,21 +19,21 @@
     "@radix-ui/react-popover": "^1.1.1",
     "axios": "^1.7.7",
     "npm-run-all": "^4.1.5",
-    "plasmo": "0.81.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "plasmo": "0.90.5",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.6",
     "@types/chrome": "0.0.237",
     "@types/node": "20.2.4",
-    "@types/react": "18.2.7",
-    "@types/react-dom": "18.2.4",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
     "dotenv": "^16.4.5",
     "firebase-admin": "^11.11.1",
     "sharp": "^0.33.5",
     "ts-node": "^10.9.2",
-    "typescript": "5.0.4"
+    "typescript": "5.9.3"
   },
   "manifest": {
     "host_permissions": [
