@@ -82,9 +82,8 @@ TypeScriptのパスエイリアス`@/*`は`./src/*`にマップされます（ts
 
 ## コードスタイル
 
-- ESLint（Airbnb config + TypeScriptルール）
-- Prettierでフォーマット
-- `@plasmohq/prettier-plugin-sort-imports`でインポートをソート
+- Biomeでリント・フォーマット
+- インポートの自動整理
 - コミット前に`pnpm fix`を実行
 
 ## ストレージアーキテクチャ
