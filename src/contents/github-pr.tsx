@@ -43,7 +43,9 @@ const isValidImageUrl = (url: string): boolean => {
     // ファイル拡張子チェック（画像形式のみ）
     const validExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg"];
     const pathname = parsedUrl.pathname.toLowerCase();
-    const hasValidExtension = validExtensions.some((ext) => pathname.endsWith(ext));
+    const hasValidExtension = validExtensions.some((ext) =>
+      pathname.endsWith(ext),
+    );
 
     if (!hasValidExtension) {
       console.warn(`Image URL does not have a valid image extension: ${url}`);
@@ -138,7 +140,9 @@ const findReviewChangesButton = (): HTMLButtonElement | null => {
   // 方法3: data-variant="primary"で探す（フォールバック）
   return (
     Array.from(
-      document.querySelectorAll<HTMLButtonElement>('button[data-variant="primary"]'),
+      document.querySelectorAll<HTMLButtonElement>(
+        'button[data-variant="primary"]',
+      ),
     ).find((btn) => btn.textContent?.includes("Submit review")) || null
   );
 };
