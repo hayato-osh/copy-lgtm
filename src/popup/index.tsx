@@ -1,11 +1,8 @@
+import githubIcon from "data-base64:~assets/github-icon.svg";
+import logo from "data-base64:~assets/logo.svg";
 import { useStorage } from "@plasmohq/storage/hook";
 
-// eslint-disable-next-line import/no-unresolved
-import githubIcon from "data-base64:~assets/github-icon.svg";
-// eslint-disable-next-line import/no-unresolved
-import logo from "data-base64:~assets/logo.svg";
-
-import { useState, type ChangeEvent } from "react";
+import { type ChangeEvent, useState } from "react";
 
 import { Button } from "@/components/Button/Button";
 import { Checkbox } from "@/components/Checkbox/Checkbox";

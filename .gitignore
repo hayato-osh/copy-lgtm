@@ -44,8 +44,5 @@ keys.json
 # firebase sdk
 credential.json
 
-# config files
-.eslintcache
-
 # firebase にアップロード済みファイル
 uploaded/

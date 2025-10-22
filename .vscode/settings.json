@@ -9,11 +9,9 @@
     "diffbar",
     "camelcase"
   ],
-  // prettierの自動整形
+  "editor.defaultFormatter": "biomejs.biome",
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  // elintの自動整形
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.biome": "explicit"
   }
 }

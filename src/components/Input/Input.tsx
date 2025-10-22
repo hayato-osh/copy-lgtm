@@ -1,6 +1,5 @@
-import styles from "./Input.module.pcss";
-
 import type { ComponentPropsWithRef } from "react";
+import styles from "./Input.module.pcss";
 
 type Props = ComponentPropsWithRef<"input">;
 
