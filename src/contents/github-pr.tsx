@@ -27,7 +27,7 @@ export const getStyle = () => {
 /**
  * 画像URLが安全かどうかを検証
  * - HTTPSのみを許可
- * - 画像拡張子のチェック
+ * - 画像拡張子のチェック（信頼できるドメインは拡張子なしでも許可）
  * - SVG画像は信頼できるドメインのみ許可（XSS対策）
  */
 const isValidImageUrl = (url: string): boolean => {
@@ -40,7 +40,24 @@ const isValidImageUrl = (url: string): boolean => {
       return false;
     }
 
-    // ファイル拡張子チェック（画像形式のみ）
+    // 信頼できるドメイン（Firebase Storage等）
+    const trustedDomains = [
+      "storage.googleapis.com",
+      "firebasestorage.googleapis.com",
+    ];
+
+    const isTrustedDomain = trustedDomains.some(
+      (domain) =>
+        parsedUrl.hostname === domain ||
+        parsedUrl.hostname.endsWith(`.${domain}`),
+    );
+
+    // 信頼できるドメインの場合、拡張子チェックをスキップ
+    if (isTrustedDomain) {
+      return true;
+    }
+
+    // その他のドメインは拡張子チェックを行う
     const validExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg"];
     const pathname = parsedUrl.pathname.toLowerCase();
     const hasValidExtension = validExtensions.some((ext) =>

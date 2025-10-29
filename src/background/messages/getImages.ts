@@ -23,9 +23,12 @@ const handler: PlasmoMessaging.MessageHandler<any, Response> = async (
   if (response.ok) {
     images = JSON.parse(await response.text());
   } else {
-    Array.from({ length: 3 }).forEach(async (_, i) => {
-      images.push(`${endpoint}/sample/lgtm${i}`);
-    });
+    // フォールバック: 既知の画像URLを使用
+    images = [
+      `${endpoint}/lgtm/8251349`,
+      `${endpoint}/lgtm/8244663`,
+      `${endpoint}/lgtm/8227429`,
+    ];
   }
 
   res.send({
