@@ -1,0 +1,32 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:best-practices"],
+  "rangeStrategy": "pin",
+  "minimumReleaseAge": "7 days",
+  "prHourlyLimit": 5,
+  "prConcurrentLimit": 10,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"]
+  },
+  "vulnerabilityAlerts": {
+    "labels": ["security"]
+  },
+  "packageRules": [
+    {
+      "description": "Plasmo and its runtime packages move together; bumping them separately risks a version mismatch at build time",
+      "matchPackageNames": [
+        "plasmo",
+        "@plasmohq/messaging",
+        "@plasmohq/storage"
+      ],
+      "groupName": "plasmo"
+    },
+    {
+      "description": "Treat Corepack-pinned pnpm and .node-version as toolchain chores",
+      "matchDepNames": ["pnpm", "node"],
+      "semanticCommitType": "chore",
+      "groupName": "toolchain"
+    }
+  ]
+}
