@@ -107,3 +107,19 @@ TypeScriptのパスエイリアス`@/*`は`./src/*`にマップされます（ts
 
 - 旧UI: ID `pull_request_review_body`のテキストエリアと、ID `pull_request_review[event]_approve`のApproveラジオボタン
 - 新UI（React製 Files changed）: `textarea[aria-label="Markdown value"]`と`input[type="radio"][name="reviewEvent"][value="approve"]`
+
+## リリース（Chrome ウェブストアへの提出）
+
+3 つのワークフローで、バージョン更新から Chrome ウェブストアへの提出までを自動化している。
+
+1. **`bump-version.yml`**（手動実行）: `patch` / `minor` / `major` を選ぶと `package.json` の `version` を上げ、`release/x.y.z` ブランチから PR（`release: x.y.z`）を自動作成する
+2. **`release.yml`**（main への push で `package.json` が変わったとき）: そのバージョンのタグが無ければ GitHub Release（タグ名 = バージョン、`v` なし）を作成し、続けて `submit.yml` を `workflow_call` で呼ぶ。タグが既にあれば何もしない（Renovate 等の依存更新でも安全）
+3. **`submit.yml`**: lint → build → package → zip を Release に添付 → `PlasmoHQ/bpp` で Chrome ウェブストアへ提出。タグと `package.json` の version が一致しないと失敗する
+
+通常のリリース手順は「Actions → Bump version を実行 → できた PR をマージ」だけ。
+
+補足:
+- `GITHUB_TOKEN` で作成した Release は `release` イベントを発火しないため、`release.yml` から `submit.yml` を明示的に呼んでいる。手動で `gh release create` した場合は `release: published` トリガーで同じジョブが走る
+- `submit.yml` の手動実行（`workflow_dispatch`）は Release への添付をスキップして提出のみ行う。ストアは同一バージョンの再提出を拒否するので、認証確認用途
+- 必要なリポジトリシークレット: `SUBMIT_KEYS`（bpp 形式の JSON。`{"$chrome": {"clientId", "clientSecret", "refreshToken", "extId"}}`）
+- リポジトリ設定「Allow GitHub Actions to create and approve pull requests」が有効であること（`bump-version.yml` の PR 作成に必要）

@@ -1,0 +1,55 @@
+name: "Bump version"
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: "Version bump type"
+        required: true
+        default: patch
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - name: Use Node.js (.node-version)
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: .node-version
+      - name: Bump package.json version
+        id: bump
+        env:
+          BUMP: ${{ inputs.bump }}
+        run: |
+          previous="$(node -p "require('./package.json').version")"
+          npm version "$BUMP" --no-git-tag-version
+          version="$(node -p "require('./package.json').version")"
+          echo "previous=$previous" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - name: Create pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.bump.outputs.version }}
+          PREVIOUS: ${{ steps.bump.outputs.previous }}
+        run: |
+          branch="release/$VERSION"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add package.json
+          git commit -m "release: $VERSION"
+          git push origin "$branch"
+          gh pr create \
+            --base main \
+            --head "$branch" \
+            --title "release: $VERSION" \
+            --body "$(printf 'Bump version %s -> %s.\n\nマージすると `release.yml` が GitHub Release `%s` を作成し、Chrome ウェブストアへ提出します。' "$PREVIOUS" "$VERSION" "$VERSION")"
