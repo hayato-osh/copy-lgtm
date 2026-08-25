@@ -121,5 +121,5 @@ TypeScriptのパスエイリアス`@/*`は`./src/*`にマップされます（ts
 補足:
 - `GITHUB_TOKEN` で作成した Release は `release` イベントを発火しないため、`release.yml` から `submit.yml` を明示的に呼んでいる。手動で `gh release create` した場合は `release: published` トリガーで同じジョブが走る
 - `submit.yml` の手動実行（`workflow_dispatch`）は Release への添付をスキップして提出のみ行う。ストアは同一バージョンの再提出を拒否するので、認証確認用途
-- 必要なリポジトリシークレット: `SUBMIT_KEYS`（bpp 形式の JSON。`{"$chrome": {"clientId", "clientSecret", "refreshToken", "extId"}}`）
+- 必要なリポジトリシークレット: `SUBMIT_KEYS`（bpp 形式の JSON。`{"chrome": {"clientId", "clientSecret", "refreshToken", "extId"}}`）
 - リポジトリ設定「Allow GitHub Actions to create and approve pull requests」が有効であること（`bump-version.yml` の PR 作成に必要）
