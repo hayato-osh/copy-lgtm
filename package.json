@@ -5,6 +5,7 @@
   "description": "Extension that allows you to place a button on the GitHub pull request screen that allows you to copy LGTM images.",
   "author": "hayato",
   "type": "module",
+  "packageManager": "pnpm@11.22.0",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
@@ -14,23 +15,23 @@
     "fix": "biome check --write ."
   },
   "dependencies": {
-    "@plasmohq/messaging": "^0.7.2",
-    "@plasmohq/storage": "^1.15.0",
-    "@radix-ui/react-popover": "^1.1.1",
-    "axios": "^1.12.2",
+    "@plasmohq/messaging": "0.7.2",
+    "@plasmohq/storage": "1.15.0",
+    "@radix-ui/react-popover": "1.1.23",
+    "axios": "1.19.0",
     "plasmo": "0.90.5",
-    "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.6",
-    "@types/chrome": "0.1.24",
-    "@types/node": "24.9.1",
-    "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.2",
-    "dotenv": "^17.2.3",
-    "sharp": "^0.33.5",
-    "typescript": "5.9.3"
+    "@biomejs/biome": "2.5.9",
+    "@types/chrome": "0.2.6",
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.4",
+    "dotenv": "17.4.2",
+    "sharp": "0.35.3",
+    "typescript": "6.0.3"
   },
   "manifest": {
     "host_permissions": [
