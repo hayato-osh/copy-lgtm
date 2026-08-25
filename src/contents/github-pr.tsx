@@ -6,6 +6,7 @@ import { sendToBackground } from "@plasmohq/messaging";
 import { Storage } from "@plasmohq/storage";
 import type { PlasmoCSConfig, PlasmoGetInlineAnchorList } from "plasmo";
 import { useCallback, useState } from "react";
+import bundledImageUrls from "../../images/imageUrls.json";
 import * as style from "./github-pr.module.pcss";
 
 const styleText = githubStyle;
@@ -40,11 +41,8 @@ const isValidImageUrl = (url: string): boolean => {
       return false;
     }
 
-    // 信頼できるドメイン（Firebase Storage等）
-    const trustedDomains = [
-      "storage.googleapis.com",
-      "firebasestorage.googleapis.com",
-    ];
+    // 信頼できるドメイン（このリポジトリで配信しているLGTM画像）
+    const trustedDomains = ["raw.githubusercontent.com"];
 
     const isTrustedDomain = trustedDomains.some(
       (domain) =>
@@ -72,8 +70,6 @@ const isValidImageUrl = (url: string): boolean => {
     // SVG画像のみドメインチェック（JavaScriptを含む可能性があるため）
     if (pathname.endsWith(".svg")) {
       const trustedDomainsForSvg = [
-        "storage.googleapis.com",
-        "firebasestorage.googleapis.com",
         "githubusercontent.com",
         "cdn.jsdelivr.net",
       ];
@@ -387,16 +383,14 @@ const PlasmoInline = () => {
             console.error("Failed to fetch images from background:", error);
           }
 
-          // それでも画像がない場合、デフォルト画像を使用
+          // それでも画像がない場合、拡張機能に同梱している画像一覧を使用
           if (images.length === 0) {
-            const defaultImage =
-              "https://storage.googleapis.com/copy-lgtm-f1935.appspot.com/sample.png";
-            if (isValidImageUrl(defaultImage)) {
-              images = [defaultImage];
-            } else {
-              console.error("No valid images available");
-              return;
-            }
+            images = sanitizeImageUrls(bundledImageUrls);
+          }
+
+          if (images.length === 0) {
+            console.error("No valid images available");
+            return;
           }
         }
 

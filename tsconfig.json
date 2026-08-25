@@ -1,9 +1,10 @@
 {
   "extends": "plasmo/templates/tsconfig.base",
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "uploaded", "build"],
   "include": [".plasmo/index.d.ts", "./**/*.ts", "./**/*.tsx", "**/*.mts"],
   "module": "esnext",
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "paths": {
       "@/*": ["./src/*"]
     },

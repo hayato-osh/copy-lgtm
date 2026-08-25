@@ -1,23 +1,21 @@
-#!/usr/bin/env -S node --loader ts-node/esm
-
 import { readFile } from "node:fs/promises";
 import axios from "axios";
-
 import sharp from "sharp";
 
 const lgtmText = await readFile("assets/lgtm.svg");
 
-// 画像に LGTM のテキストを追加する処理を行う
-export async function processImage(image: { url: string }) {
-  const response = await axios.get(image.url, { responseType: "arraybuffer" });
-  const imageBuffer = response.data;
+/**
+ * 画像に「LGTM」のテキストを合成し、JPEG にして返す
+ * リポジトリにコミットするため、PR に貼る幅（600px）に十分なサイズに抑える
+ */
+export async function processImage(imageUrl: string): Promise<Buffer> {
+  const response = await axios.get<ArrayBuffer>(imageUrl, {
+    responseType: "arraybuffer",
+  });
 
-  // sharpを使用して画像にテキストを追加
-  const outputBuffer = await sharp(imageBuffer)
+  return sharp(Buffer.from(response.data))
     .composite([{ input: Buffer.from(lgtmText), gravity: "center" }])
-    .resize(2560, 1440)
-    .jpeg()
+    .resize(1280, 720)
+    .jpeg({ quality: 82 })
     .toBuffer();
-
-  return outputBuffer;
 }
