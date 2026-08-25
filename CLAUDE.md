@@ -20,7 +20,8 @@ Copy LGTMは、Plasmoフレームワークで構築されたChrome拡張機能�
 
 **コンテンツスクリプト** (`src/contents/github-pr.tsx`):
 - `https://github.com/*`にマッチするGitHub PRページに注入される
-- `getInlineAnchor`を使用して`.pr-toolbar > .diffbar > .pr-review-tools`要素をターゲットにする
+- PRの差分ページ（旧UI: `/pull/N/files`、新UI: `/pull/N/changes`）でのみ動作する
+- `getInlineAnchorList`でボタンの挿入位置を決める。新UI: `button[class*="ReviewMenuButton"]`（ラベルは "Submit review" / "Submit comments"）の直後、旧UI: `.pr-toolbar > .diffbar > .pr-review-tools`の直後
 - 主な機能：ランダムなLGTM画像をPRレビューのテキストエリアにコピー
 - ユーザー設定に基づいて「Approve」ラジオボタンを自動選択（オプション）
 - 挿入前にテキストエリアに画像が既に存在するかチェック
@@ -100,8 +101,11 @@ TypeScriptのパスエイリアス`@/*`は`./src/*`にマップされます（ts
 4. ランダムに画像を選択
 5. テキストエリアに画像が既に存在するかチェック（`<img alt="LGTM"`を検索）
 6. HTMLを挿入：`<img alt="LGTM" src="${url}" width="600px" />`
-7. 自動選択が有効な場合、「Approve」ラジオボタンをチェック
+7. 自動選択が有効な場合、「Approve」ラジオボタンを`click()`で選択（Reactのcontrolled inputに反映させるため）
 
 ## GitHub連携
 
-拡張機能はGitHub PRのレビューツールセクションにUIを注入します。ID `pull_request_review_body`のテキストエリアと、ID `pull_request_review[event]_approve`のApproveラジオボタンをターゲットにします。
+拡張機能はGitHub PRのレビューツールセクションにUIを注入します。
+
+- 旧UI: ID `pull_request_review_body`のテキストエリアと、ID `pull_request_review[event]_approve`のApproveラジオボタン
+- 新UI（React製 Files changed）: `textarea[aria-label="Markdown value"]`と`input[type="radio"][name="reviewEvent"][value="approve"]`

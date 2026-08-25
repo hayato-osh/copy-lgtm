@@ -160,9 +160,16 @@ const findReviewChangesButton = (): HTMLButtonElement | null => {
       document.querySelectorAll<HTMLButtonElement>(
         'button[data-variant="primary"]',
       ),
-    ).find((btn) => btn.textContent?.includes("Submit review")) || null
+    ).find((btn) => isSubmitReviewButtonText(btn.textContent)) || null
   );
 };
+
+/**
+ * 新UIのレビューボタンのラベルかどうか
+ * ボタンのラベルはレビューの状態で "Submit review" / "Submit comments" と変わる
+ */
+const isSubmitReviewButtonText = (text: string | null | undefined): boolean =>
+  /Submit (review|comments)/.test(text ?? "");
 
 /**
  * レビューコメントのtextareaを取得（新旧UI両対応）
@@ -274,10 +281,11 @@ const findApproveRadioButton = (): HTMLInputElement | null => {
  * Approveラジオボタンを選択（React対応）
  */
 const selectApproveOption = (radioButton: HTMLInputElement) => {
-  radioButton.checked = true;
-  // Reactにイベントを通知
-  const changeEvent = new Event("change", { bubbles: true });
-  radioButton.dispatchEvent(changeEvent);
+  if (radioButton.checked || radioButton.disabled) {
+    return;
+  }
+  // click() ならネイティブの change イベントが発火し、React の controlled input でも状態が更新される
+  radioButton.click();
 };
 
 // ========================================
@@ -287,13 +295,17 @@ const selectApproveOption = (radioButton: HTMLInputElement) => {
 /**
  * Copy LGTMボタンを配置する位置を決定
  */
-export const getInlineAnchorList: PlasmoGetInlineAnchorList = async () => {
-  // PRのFilesページでのみ動作
-  const isPRFilesPage =
-    window.location.pathname.includes("/pull/") &&
-    window.location.pathname.includes("/files");
+/**
+ * PRの差分ページかどうか
+ * - 旧UI: /owner/repo/pull/123/files
+ * - 新UI: /owner/repo/pull/123/changes（/files はここへリダイレクトされる）
+ */
+const isPRFilesPage = (pathname: string): boolean =>
+  /\/pull\/\d+\/(files|changes)(\/|$)/.test(pathname);
 
-  if (!isPRFilesPage) {
+export const getInlineAnchorList: PlasmoGetInlineAnchorList = async () => {
+  // PRの差分ページでのみ動作
+  if (!isPRFilesPage(window.location.pathname)) {
     return [];
   }
 
@@ -312,7 +324,7 @@ export const getInlineAnchorList: PlasmoGetInlineAnchorList = async () => {
     ),
   );
   const submitReviewButton = primaryButtons.find((btn) =>
-    btn.textContent?.includes("Submit review"),
+    isSubmitReviewButtonText(btn.textContent),
   );
   if (submitReviewButton) {
     return [{ element: submitReviewButton, insertPosition: "afterend" }];
