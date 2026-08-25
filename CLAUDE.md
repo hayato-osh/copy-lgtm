@@ -26,9 +26,8 @@ Copy LGTMは、Plasmoフレームワークで構築されたChrome拡張機能�
 - 挿入前にテキストエリアに画像が既に存在するかチェック
 
 **バックグラウンドメッセージハンドラー** (`src/background/messages/getImages.ts`):
-- Firebase StorageからLGTM画像のURLを取得
-- 取得に失敗した場合はサンプル画像にフォールバック
-- エンドポイントに`PLASMO_PUBLIC_IMAGES_JSON`環境変数を使用
+- `${PLASMO_PUBLIC_IMAGES_JSON}/imageUrls.json`（GitHubのraw URL）からLGTM画像のURL一覧を取得
+- 取得に失敗した場合はビルド時に同梱した`images/imageUrls.json`にフォールバック
 
 **ポップアップ** (`src/popup/index.tsx`):
 - 拡張機能の設定UI
@@ -38,11 +37,12 @@ Copy LGTMは、Plasmoフレームワークで構築されたChrome拡張機能�
 
 ### 画像管理
 
-**アップロードスクリプト** (`scripts/createLGTM.mts`):
+LGTM画像はこのリポジトリの`images/`ディレクトリにコミットし、`https://raw.githubusercontent.com/hayato-osh/copy-lgtm/main/images/` から配信する（Firebase Storageは課金プランの都合で廃止）。
+
+**生成スクリプト** (`scripts/generateImages.mts`、Node 22.6+ の型ストリップで実行、ts-node 不要):
 - Pixabay APIから画像を取得
-- Sharpライブラリを使用して画像を処理
-- Firebase Storageにアップロード
-- `credential.json`にFirebase認証情報が必要
+- Sharpライブラリで画像に「LGTM」を合成し、1280x720のJPEGにする
+- `images/<pixabayId>.jpg`と`images/imageUrls.json`を書き出す（mainブランチにマージされると配信される）
 - 環境変数：`PIXABAY_API_KEY`, `PLASMO_PUBLIC_IMAGES_JSON`
 
 ## 開発コマンド
@@ -63,18 +63,16 @@ pnpm lint
 # リント問題を自動修正
 pnpm fix
 
-# 新しいLGTM画像をアップロード（Firebase設定が必要）
-pnpm upload
+# 新しいLGTM画像を生成してimages/に書き出す（PIXABAY_API_KEYが必要）
+pnpm generate:images
 ```
 
 ## 環境設定
 
 以下の内容で`.env`ファイルを作成：
 - `PIXABAY_API_KEY`: 画像取得用のPixabay APIキー
-- `PLASMO_PUBLIC_IMAGES_JSON`: Firebase StorageのエンドポイントURL
+- `PLASMO_PUBLIC_IMAGES_JSON`: 画像と`imageUrls.json`を配信するベースURL（`https://raw.githubusercontent.com/hayato-osh/copy-lgtm/main/images`）
 - `PLASMO_PUBLIC_VERSION`: 拡張機能のバージョン（デフォルトはpackage.jsonのバージョン）
-
-画像アップロード機能を使用する場合は、Firebaseサービスアカウントの認証情報を`credential.json`に配置してください。
 
 ## パスエイリアス
 
@@ -95,8 +93,8 @@ TypeScriptのパスエイリアス`@/*`は`./src/*`にマップされます（ts
 ## 画像挿入ロジック
 
 1. ローカルストレージでカスタムURLをチェック
-2. 空の場合、バックグラウンドスクリプトから取得（Firebase Storage）
-3. `https://`で始まるURLをフィルタリング
+2. 空の場合、バックグラウンドスクリプトから取得（GitHub raw URL → 失敗時は同梱の`images/imageUrls.json`）
+3. `https://`で始まるURLをフィルタリング（`raw.githubusercontent.com`以外は画像拡張子必須、SVGは信頼ドメインのみ）
 4. ランダムに画像を選択
 5. テキストエリアに画像が既に存在するかチェック（`<img alt="LGTM"`を検索）
 6. HTMLを挿入：`<img alt="LGTM" src="${url}" width="600px" />`

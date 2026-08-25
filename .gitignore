@@ -41,8 +41,6 @@ keys.json
 # typescript
 .tsbuildinfo
 
-# firebase sdk
+# 旧 firebase 時代の残骸（画像は images/ にコミットする）
 credential.json
-
-# firebase にアップロード済みファイル
 uploaded/
