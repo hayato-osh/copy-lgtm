@@ -1,3 +1,14 @@
+# pnpm の設定（pnpm 10+ は .npmrc ではなくここに置く）
+saveExact: true
+# 公開から 7 日（10080 分）未満のバージョンは解決しない（サプライチェーン対策）
+minimumReleaseAge: 10080
+# 推移的依存に git / tarball 指定を許さない
+blockExoticSubdeps: true
+# allowBuilds に列挙されていないビルドスクリプトを持つ依存が来たらエラーにする
+strictDepBuilds: true
+# pnpm run 前に node_modules と lockfile の整合を確認し、ズレていれば install する
+verifyDepsBeforeRun: install
+
 allowBuilds:
   '@parcel/watcher': true
   '@swc/core': true
@@ -11,3 +22,10 @@ overrides:
   'msgpackr@<1.10.1': '>=1.10.1'
   '@babel/traverse@<7.23.2': '>=7.23.2'
   'svelte@<4.2.19': '>=4.2.19 <5'
+  # plasmo 配下の推移的依存（plasmo 自体は最新）。API 互換な patch/minor 範囲のみ引き上げる
+  'sharp@<0.35.0': '>=0.35.0'
+  'nanoid@>=4.0.0 <5.1.16': '>=5.1.16'
+  'lodash@<4.17.24': '>=4.17.24'
+  'underscore@<1.13.8': '>=1.13.8'
+  'diff@>=4.0.0 <4.0.4': '>=4.0.4 <5'
+  'esbuild@<0.24.3': '>=0.24.3'

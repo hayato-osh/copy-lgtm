@@ -5,9 +5,9 @@
   "module": "esnext",
   "compilerOptions": {
     "allowImportingTsExtensions": true,
+    "moduleResolution": "bundler",
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "baseUrl": "."
+    }
   }
 }
