@@ -10,4 +10,4 @@ allowBuilds:
 overrides:
   'msgpackr@<1.10.1': '>=1.10.1'
   '@babel/traverse@<7.23.2': '>=7.23.2'
-  'svelte@<4.2.19': '>=4.2.19'
+  'svelte@<4.2.19': '>=4.2.19 <5'
