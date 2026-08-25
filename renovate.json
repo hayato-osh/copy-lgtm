@@ -14,6 +14,11 @@
   },
   "packageRules": [
     {
+      "description": "pnpm-workspace.yaml overrides are deliberate security floors with intentional ranges (e.g. svelte <5 keeps Plasmo's Parcel tree working); Renovate must not pin them or bump the ranges",
+      "matchDepTypes": ["pnpm-workspace.overrides"],
+      "enabled": false
+    },
+    {
       "description": "Plasmo and its runtime packages move together; bumping them separately risks a version mismatch at build time",
       "matchPackageNames": [
         "plasmo",
