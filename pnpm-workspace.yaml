@@ -1,7 +1,10 @@
 # pnpm の設定（pnpm 10+ は .npmrc ではなくここに置く）
 saveExact: true
-# 公開から 7 日（10080 分）未満のバージョンは解決しない（サプライチェーン対策）
-minimumReleaseAge: 10080
+# 公開から 4 日（5760 分）未満のバージョンは解決しない（サプライチェーン対策）。
+# renovate.json の minimumReleaseAge (7 days) より必ず短くしておくこと。
+# 同じか長いと、Renovate が PR を作る際の pnpm-lock.yaml 再生成が
+# ERR_PNPM_NO_MATURE_MATCHING_VERSION で落ちる（renovate/artifacts が failure になる）
+minimumReleaseAge: 5760
 # 推移的依存に git / tarball 指定を許さない
 blockExoticSubdeps: true
 # allowBuilds に列挙されていないビルドスクリプトを持つ依存が来たらエラーにする

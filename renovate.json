@@ -2,6 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:best-practices"],
   "rangeStrategy": "pin",
+  "description": "minimumReleaseAge は pnpm-workspace.yaml の minimumReleaseAge (4 days) より必ず長くする。逆転すると Renovate のロックファイル更新が pnpm に拒否され renovate/artifacts が落ちる",
   "minimumReleaseAge": "7 days",
   "prHourlyLimit": 5,
   "prConcurrentLimit": 10,
