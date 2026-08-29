@@ -11,7 +11,9 @@
     "schedule": ["before 6am on monday"]
   },
   "vulnerabilityAlerts": {
-    "labels": ["security"]
+    "description": "脆弱性対応は patch/minor/major のまとめ PR に混ぜず、単独の security PR として先に出す",
+    "labels": ["security"],
+    "groupName": "security"
   },
   "packageRules": [
     {
@@ -20,19 +22,25 @@
       "enabled": false
     },
     {
-      "description": "Plasmo and its runtime packages move together; bumping them separately risks a version mismatch at build time",
-      "matchPackageNames": [
-        "plasmo",
-        "@plasmohq/messaging",
-        "@plasmohq/storage"
-      ],
-      "groupName": "plasmo"
-    },
-    {
       "description": "Treat Corepack-pinned pnpm and .node-version as toolchain chores",
       "matchDepNames": ["pnpm", "node"],
-      "semanticCommitType": "chore",
-      "groupName": "toolchain"
+      "semanticCommitType": "chore"
+    },
+    {
+      "description": "PR の数を抑えるため、更新の種類ごとに patch / minor / major の 3 本にまとめる（config:best-practices の monorepo グループより後に置いて上書きする）。digest / pinDigest（GitHub Actions の SHA 更新）は patch 扱い",
+      "matchUpdateTypes": ["patch", "digest", "pinDigest"],
+      "groupName": "patch dependencies",
+      "groupSlug": "patch"
+    },
+    {
+      "matchUpdateTypes": ["minor"],
+      "groupName": "minor dependencies",
+      "groupSlug": "minor"
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "groupName": "major dependencies",
+      "groupSlug": "major"
     }
   ]
 }
