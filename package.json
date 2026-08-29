@@ -18,7 +18,7 @@
     "@plasmohq/messaging": "0.7.2",
     "@plasmohq/storage": "1.15.0",
     "@radix-ui/react-popover": "1.1.23",
-    "axios": "1.19.0",
+    "axios": "1.20.0",
     "plasmo": "0.90.5",
     "react": "19.2.8",
     "react-dom": "19.2.8"
