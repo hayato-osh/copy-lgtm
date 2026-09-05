@@ -5,7 +5,7 @@
   "description": "Extension that allows you to place a button on the GitHub pull request screen that allows you to copy LGTM images.",
   "author": "hayato",
   "type": "module",
-  "packageManager": "pnpm@11.24.0",
+  "packageManager": "pnpm@11.25.0",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
@@ -18,7 +18,7 @@
     "@plasmohq/messaging": "0.7.2",
     "@plasmohq/storage": "1.15.0",
     "@radix-ui/react-popover": "1.1.23",
-    "axios": "1.19.0",
+    "axios": "1.20.0",
     "plasmo": "0.90.5",
     "react": "19.2.8",
     "react-dom": "19.2.8"
@@ -26,7 +26,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.5.11",
     "@types/chrome": "0.2.7",
-    "@types/node": "26.2.0",
+    "@types/node": "26.4.1",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.5",
     "dotenv": "17.4.2",
