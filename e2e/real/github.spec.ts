@@ -8,8 +8,12 @@
  */
 import { copyLgtmButton, expect, test } from "../fixtures";
 
-/** マージ済みの公開 PR。差分ページの構造確認にだけ使う（レビューは送信しない） */
-const PR_URL = "https://github.com/hayato-osh/copy-lgtm/pull/112";
+/**
+ * 検証に使う公開 PR。「Sample PR」として open のまま維持しているもの。
+ * マージ済み PR だとダイアログが "Finish your comments" になり Approve ラジオが出ないため、open な PR が必要。
+ * 作者自身の PR なので Approve は disabled で、誤って承認されることはない（レビューも送信しない）
+ */
+const PR_URL = "https://github.com/hayato-osh/copy-lgtm/pull/18";
 
 type StorageState = {
   cookies: Parameters<
@@ -94,9 +98,10 @@ test.describe("本物の GitHub", () => {
     );
     await expect(page.getByText("Success!")).toBeVisible();
 
-    // Approve ラジオも残っているか（送信はしない）
+    // Approve ラジオも残っているか（作者自身の PR なので disabled。送信はしない）
     await expect(
       page.locator('input[type="radio"][name="reviewEvent"][value="approve"]'),
+      '新UIの Approve ラジオ input[name="reviewEvent"][value="approve"] が見つからない（GitHub の DOM が変わった可能性）',
     ).toBeAttached();
   });
 });
