@@ -84,7 +84,7 @@ pnpm generate:images
 - E2Eでのストレージのシードは拡張機能のサービスワーカー上で`chrome.storage.sync.set`する（`e2e/fixtures.ts`の`seedStorage`）。popupページ経由のシードはpopup側の`useStorage`初期化と競合して値が消えることがあるので使わない
 - フィクスチャは実際のGitHub DOMの最小再現なので、GitHubのUI変更には追従できない。セレクタを変えたら本物のPRページでの確認も1回は行うこと
 - **本物のGitHubに対するチェック（`e2e/real/`、`pnpm test:e2e:real`）**: 公開PR（#112）の差分ページに拡張機能を実際に注入して、GitHub側のUI変更による破壊を検知する。`playwright.real.config.ts`で分離し、通常の`pnpm test:e2e`からは除外。`ci.yml`の`real-github`ジョブがPRごとに実行する（手動実行も可）
-  - 未ログインだとGitHubは旧UI（`/files`、`.pr-review-tools`）しか返さないので、新UI（`/changes`）の検証にはログイン状態が必要。`pnpm auth:github`でブラウザからログインして`.github-auth.json`（gitignore済み）を作り、その中身をリポジトリシークレット`GH_UI_CHECK_STORAGE_STATE`に登録すると新UIのテストも走る。未設定ならスキップされる
+  - 未ログインだとGitHubは旧UI（`/files`、`.pr-review-tools`）しか返さないので、新UI（`/changes`）の検証にはログイン状態が必要。`pnpm auth:github`（`scripts/saveGitHubAuth.mts`）でブラウザが開くのでログインを2FAまで完了させると、`user_session`クッキーを検知して`.github-auth.json`（gitignore済み）に自動保存される。その中身をリポジトリシークレット`GH_UI_CHECK_STORAGE_STATE`に登録すると新UIのテストも走る。未設定ならスキップされる
   - セッション切れは「GitHubにログインできていません」というメッセージで区別して失敗する。その場合は`pnpm auth:github`でシークレットを作り直す
 
 ## 環境設定

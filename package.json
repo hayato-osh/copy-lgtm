@@ -18,7 +18,7 @@
     "test:e2e": "pnpm build && playwright test",
     "test:e2e:only": "playwright test",
     "test:e2e:real": "playwright test -c playwright.real.config.ts",
-    "auth:github": "playwright codegen https://github.com/login --save-storage=.github-auth.json"
+    "auth:github": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/saveGitHubAuth.mts"
   },
   "dependencies": {
     "@plasmohq/messaging": "0.7.2",

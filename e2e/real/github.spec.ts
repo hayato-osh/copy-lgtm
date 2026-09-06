@@ -20,13 +20,21 @@ type StorageState = {
 const loadStorageState = (): StorageState | null => {
   const raw = process.env.GH_UI_CHECK_STORAGE_STATE;
   if (!raw) return null;
+  let state: StorageState;
   try {
-    return JSON.parse(raw) as StorageState;
+    state = JSON.parse(raw) as StorageState;
   } catch {
     throw new Error(
       "GH_UI_CHECK_STORAGE_STATE が JSON として読めません（playwright の storageState 形式を渡してください）",
     );
   }
+  // ログイン完了前に保存された状態（logged_in=no）を、UI変更による破壊と区別して弾く
+  if (!state.cookies?.some((cookie) => cookie.name === "user_session")) {
+    throw new Error(
+      "GH_UI_CHECK_STORAGE_STATE にログイン済みのセッション（user_session クッキー）が含まれていません。pnpm auth:github でログインを完了させてから保存し直し、シークレットを更新してください",
+    );
+  }
+  return state;
 };
 
 test.describe("本物の GitHub", () => {
