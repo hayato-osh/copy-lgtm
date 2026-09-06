@@ -8,6 +8,10 @@
 
 # testing
 /coverage
+/test-results
+/playwright-report
+# pnpm auth:github が書き出す GitHub のログイン状態（シークレットに登録して使う）
+.github-auth.json
 
 #cache
 .turbo
