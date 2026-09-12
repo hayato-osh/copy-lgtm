@@ -12,7 +12,13 @@
     "package": "plasmo package",
     "generate:images": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/generateImages.mts",
     "lint": "biome check .",
-    "fix": "biome check --write ."
+    "fix": "biome check --write .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "pnpm build && playwright test",
+    "test:e2e:only": "playwright test",
+    "test:e2e:real": "playwright test -c playwright.real.config.ts",
+    "auth:github": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/saveGitHubAuth.mts"
   },
   "dependencies": {
     "@plasmohq/messaging": "0.7.2",
@@ -25,13 +31,15 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.11",
+    "@playwright/test": "1.62.1",
     "@types/chrome": "0.2.7",
     "@types/node": "26.4.1",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.5",
     "dotenv": "17.4.2",
     "sharp": "0.35.4",
-    "typescript": "7.0.2"
+    "typescript": "7.0.2",
+    "vitest": "4.1.11"
   },
   "manifest": {
     "host_permissions": [

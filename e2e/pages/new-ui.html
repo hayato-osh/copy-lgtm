@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>PR changes page (new UI fixture)</title>
+  </head>
+  <body>
+    <!-- 新UI（React製 Files changed）の最小構造を再現したフィクスチャ -->
+    <header>
+      <button
+        type="button"
+        data-variant="primary"
+        class="prc-Button-ButtonBase ReviewMenuButton-module__trigger--abc12"
+      >
+        Submit review
+      </button>
+    </header>
+
+    <!-- 実際のGitHubではボタンクリックでレビューダイアログが開く -->
+    <div id="review-dialog" hidden>
+      <textarea aria-label="Markdown value"></textarea>
+      <label>
+        <input type="radio" name="reviewEvent" value="comment" checked />
+        Comment
+      </label>
+      <label>
+        <input type="radio" name="reviewEvent" value="approve" />
+        Approve
+      </label>
+    </div>
+
+    <script>
+      document
+        .querySelector('button[class*="ReviewMenuButton"]')
+        .addEventListener("click", () => {
+          document.getElementById("review-dialog").hidden = false;
+        });
+    </script>
+  </body>
+</html>

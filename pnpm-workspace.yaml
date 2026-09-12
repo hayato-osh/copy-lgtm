@@ -13,6 +13,9 @@ strictDepBuilds: true
 verifyDepsBeforeRun: install
 
 allowBuilds:
+  # playwright の install スクリプトはブラウザのダウンロード。
+  # CI ではキャッシュがなければここで落ちず、pnpm exec playwright install chromium で入れる
+  playwright: true
   '@parcel/watcher': true
   '@swc/core': true
   esbuild: true

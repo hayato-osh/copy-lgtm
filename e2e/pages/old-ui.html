@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>PR files page (old UI fixture)</title>
+  </head>
+  <body>
+    <!-- 旧UI（Rails製 Files changed）の最小構造を再現したフィクスチャ -->
+    <div class="pr-toolbar">
+      <div class="diffbar">
+        <div class="pr-review-tools">
+          <button type="button" id="review-changes">Review changes</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 実際のGitHubではボタンクリックでレビューフォームが開く -->
+    <div id="review-form" hidden>
+      <textarea id="pull_request_review_body"></textarea>
+      <label>
+        <input
+          type="radio"
+          name="pull_request_review[event]"
+          id="pull_request_review[event]_comment"
+          value="comment"
+          checked
+        />
+        Comment
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="pull_request_review[event]"
+          id="pull_request_review[event]_approve"
+          value="approve"
+        />
+        Approve
+      </label>
+    </div>
+
+    <script>
+      document
+        .getElementById("review-changes")
+        .addEventListener("click", () => {
+          document.getElementById("review-form").hidden = false;
+        });
+    </script>
+  </body>
+</html>
